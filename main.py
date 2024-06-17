@@ -23,7 +23,12 @@ PATH_TO_DESKTOP = os.getenv("PATH_TO_DESKTOP")
 def main():
     print("-----Start of Sorting Script-----")
     # Define list of folders that we'll be sorting into
-    folders = ["Images", "Audio", "Docs"]
+    #folders = ["Images", "Audio", "Docs"]
+    folders = {
+        "Images": "",
+        "Audio": "",
+        "Docs": ""
+    }
     img_exts = ["jpg", "png", "jfif"]
     audio_exts = ["mp3", "wav"]
     doc_exts = ["docx"]
@@ -34,6 +39,7 @@ def main():
         if not os.path.exists(folder_to_make):
             print("Making folder for: ", folder)
             os.makedirs(folder_to_make)
+            folders[folder] = folder_to_make
         else:
             print(folder_to_make + " exists!")
 
@@ -47,11 +53,11 @@ def main():
             extension = split_file[1]
             file_dir = PATH_TO_DESKTOP + file
             if extension in img_exts:
-                shutil.move(file_dir, PATH_TO_DESKTOP+folders[0])
+                shutil.move(file_dir, folders["Images"])
             elif extension  in audio_exts:
-                shutil.move(file_dir, PATH_TO_DESKTOP+folders[1])
+                shutil.move(file_dir, folders["Audio"])
             elif extension in doc_exts:
-                shutil.move(file_dir, PATH_TO_DESKTOP+folders[2])
+                shutil.move(file_dir, folders["Docs"])
             else:
                 print(f"unsupported extension type: {extension}")
 
