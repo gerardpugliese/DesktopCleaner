@@ -22,15 +22,16 @@ def start_cleanup(path_to_source, rules):
         split_file = file.split(".")
 
         for dest in rules:
-            if rules[dest]['names'][0] != '': #Empty names
-                for name in rules[dest]['names']:
-                    if name in split_file[0]:
+            if path_to_source+"/"+file != dest: # Skip destination folder in case it matches the name filter
+                if rules[dest]['names'][0] != '': # Empty names
+                    for name in rules[dest]['names']:
+                        if name in split_file[0]:
+                            shutil.move(path_to_source+"/"+file, dest)
+                            continue
+                if len(split_file) > 1: # This is a file, check for extension match
+                    if "."+split_file[1] in rules[dest]['extensions']:
                         shutil.move(path_to_source+"/"+file, dest)
-                        continue
-            if len(split_file) > 1: # This is a file, check for extension match
-                if "."+split_file[1] in rules[dest]['extensions']:
-                    shutil.move(path_to_source+"/"+file, dest)
-   
+    
 def main():
     rules = {}
     done_with_rules = False
@@ -94,11 +95,17 @@ def main():
         print("Rule #"  + str(rule_counter) +":")
         print("Destination folder: " + dest)
         print("Extensions: ", end="")
-        for ext in rules[dest]['extensions']:
-            print(ext.strip(), end=' ')
+        if (rules[dest]['extensions'][0] == ""):
+            print("No extensions", end="")
+        else:
+            for ext in rules[dest]['extensions']:
+                print(ext.strip(), end=' ')
         print("\nNames: ", end="")
-        for name in rules[dest]['names']:
-            print(name.strip(), end=' ')
+        if (rules[dest]['names'][0] == ""):
+            print("No names", end="")
+        else:
+            for name in rules[dest]['names']:
+                print(name.strip(), end=' ')
         rule_counter += 1
         print("\n")
     start_cleanup_input = input("\nStart cleanup with these rules? (Y/N)")
