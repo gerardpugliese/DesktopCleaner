@@ -37,9 +37,10 @@ def main():
     done_with_rules = False
     print("Welcome to File Cleanup!")
 
-    # Retrieve / verify source folder
+    # Retrieve source folder
     source_path_valid = False
     path_to_source = input("What folder would you like to cleanup? Ex: C:/Users/<username>/Desktop \n")
+    # Validate / create source folder
     while not source_path_valid:
         if not os.path.exists(path_to_source):
             create_source = input("Folder doesn't exist, would you like to create it? (Y/N)")
@@ -81,7 +82,7 @@ def main():
 
         # Loop again if we want to create another rule
         more_rules = input("Would you like to create another Rule? (Y/N)")
-        if more_rules == "N":
+        if more_rules.lower() == "n":
             done_with_rules = True
     
     # Once all rules are create, display them so user can confirm before starting
@@ -100,10 +101,10 @@ def main():
         rule_counter += 1
         print("\n")
     start_cleanup_input = input("\nStart cleanup with these rules? (Y/N)")
-    if start_cleanup_input == "Y" or start_cleanup_input == "y":
+    if start_cleanup_input.lower() == "y":
         print("Start cleanup")
         start_cleanup(path_to_source, rules)
-    elif start_cleanup_input == "N" or start_cleanup_input == "n":
+    elif start_cleanup_input.lower() == "n":
         print("Do not start cleanup")
     
 if __name__ == "__main__":
