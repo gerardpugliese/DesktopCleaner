@@ -28,7 +28,7 @@ def start_cleanup(path_to_source, rules):
                         shutil.move(path_to_source+file, dest)
                         continue
             if len(split_file) > 1: # This is a file, check for extension match
-                if "."+split_file[1].strip() in rules[dest]['extensions']:
+                if "."+split_file[1] in rules[dest]['extensions']:
                     shutil.move(path_to_source+"/"+file, dest)
    
 def main():
@@ -70,14 +70,16 @@ def main():
         rules[rule_dest]['names'] = [] 
 
         # Retrieve extensions for this rule
-        temp_extensions = input("What file extensions do you want to be put into this folder? Ex: .jpg, .png \n")
+        temp_extensions = input("What file extensions do you want to be put into this folder? Enter as comma separated list. Ex: .jpg, .png \n")
+        temp_extensions = temp_extensions.replace(" ", "") # Remove whitespace in str
         temp_extensions = temp_extensions.split(',')
         rules[rule_dest]['extensions'] = temp_extensions
 
         # Retrieve names for this rule
-        temp_names = input("What file names do you want to be put into this folder? Ex: Screenshots, 062425\n")
+        temp_names = input("What file names do you want to be put into this folder? Enter as comma separated  list. Ex: Screenshots, 062425\n")
+        temp_names = temp_names.replace(" ", "") # Remove whitespace in str
         temp_names = temp_names.split(',')
-        rules[rule_dest]['names'] = temp_names
+        rules[rule_dest]['names'] = temp_names # 
 
         # Loop again if we want to create another rule
         more_rules = input("Would you like to create another Rule? (Y/N)")
