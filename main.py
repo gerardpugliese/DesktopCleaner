@@ -24,7 +24,6 @@ def start_cleanup(path_to_source, rules):
         for dest in rules:
             if rules[dest]['names'][0] != '': #Empty names
                 for name in rules[dest]['names']:
-                    print('rules[dest][names]: ', rules[dest]['names'])
                     if name in split_file[0]:
                         shutil.move(path_to_source+file, dest)
                         continue
