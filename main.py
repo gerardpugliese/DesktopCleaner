@@ -25,7 +25,7 @@ def start_cleanup(path_to_source, rules):
             if rules[dest]['names'][0] != '': #Empty names
                 for name in rules[dest]['names']:
                     if name in split_file[0]:
-                        shutil.move(path_to_source+file, dest)
+                        shutil.move(path_to_source+"/"+file, dest)
                         continue
             if len(split_file) > 1: # This is a file, check for extension match
                 if "."+split_file[1] in rules[dest]['extensions']:
