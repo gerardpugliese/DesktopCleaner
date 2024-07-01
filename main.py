@@ -37,6 +37,7 @@ def main():
     done_with_rules = False
     done_with_extensions = False
     done_with_names = False
+    done_with_dest_path = False
     print("Welcome to File Cleanup!")
 
     # Retrieve source folder
@@ -64,8 +65,14 @@ def main():
 
         # Retrieve / verify destination folder for this rule
         rule_dest = input("What folder would you like these files put into?\n")
-        while not os.path.isdir(rule_dest):
-            rule_dest = input("Please enter a valid directory.\n")
+        while not done_with_dest_path:
+            if not os.path.isdir(rule_dest):
+                rule_dest = input("Please enter a valid directory.\n")
+            elif rule_dest == path_to_source: # Destination folder cannot be same as source folder
+                rule_dest = input("Destination folder cannot equal the source folder.\n")
+            else:
+                done_with_dest_path = True
+
 
         # Initialize item for this rule
         rules[rule_dest] = {}
