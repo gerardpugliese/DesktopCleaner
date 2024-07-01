@@ -35,6 +35,8 @@ def start_cleanup(path_to_source, rules):
 def main():
     rules = {}
     done_with_rules = False
+    done_with_extensions = False
+    done_with_names = False
     print("Welcome to File Cleanup!")
 
     # Retrieve source folder
@@ -71,16 +73,48 @@ def main():
         rules[rule_dest]['names'] = [] 
 
         # Retrieve extensions for this rule
-        temp_extensions = input("What file extensions do you want to be put into this folder? Enter as comma separated list. Ex: .jpg, .png \n")
-        temp_extensions = temp_extensions.replace(" ", "") # Remove whitespace in str
-        temp_extensions = temp_extensions.split(',')
-        rules[rule_dest]['extensions'] = temp_extensions
+        while not done_with_extensions:
+            temp_extensions = input("What file extensions do you want to be put into this folder? Enter as comma separated list. Ex: .jpg, .png \n")
+            temp_extensions = temp_extensions.replace(" ", "") # Remove whitespace in str
+            temp_extensions = temp_extensions.split(',')
+            rules[rule_dest]['extensions'] = temp_extensions
+
+            print("Confirm the following ", end="")
+            num_extensions = len(rules[rule_dest]['extensions'])
+            if num_extensions > 1: 
+                print (str(num_extensions)+" extensions:")
+            else:
+                print("extension:")
+            
+            for i in range(num_extensions):
+                print("#" + str(i+1) + ": " + rules[rule_dest]['extensions'][i])
+            confirm_exts_input = input("Continue with these extensions? (Y/N)")
+            if confirm_exts_input.lower() == "y":
+                done_with_extensions = True
+            else:
+                done_with_extensions = False
 
         # Retrieve names for this rule
-        temp_names = input("What file names do you want to be put into this folder? Enter as comma separated  list. Ex: Screenshots, 062425\n")
-        temp_names = temp_names.replace(" ", "") # Remove whitespace in str
-        temp_names = temp_names.split(',')
-        rules[rule_dest]['names'] = temp_names # 
+        while not done_with_names:
+            temp_names = input("What file names do you want to be put into this folder? Enter as comma separated  list. Ex: Screenshots, 062425\n")
+            temp_names = temp_names.replace(" ", "") # Remove whitespace in str
+            temp_names = temp_names.split(',')
+            rules[rule_dest]['names'] = temp_names # 
+
+            print("Confirm the following ", end="")
+            num_names = len(rules[rule_dest]['names'])
+            if num_names > 1: 
+                print (str(num_names)+" names:")
+            else:
+                print("name:")
+            
+            for i in range(num_names):
+                print("#" + str(i+1) + ": " + rules[rule_dest]['names'][i])
+            confirm_names_input = input("Continue with these names? (Y/N)")
+            if confirm_names_input.lower() == "y":
+                done_with_names = True
+            else:
+                done_with_names = False
 
         # Loop again if we want to create another rule
         more_rules = input("Would you like to create another Rule? (Y/N)")
