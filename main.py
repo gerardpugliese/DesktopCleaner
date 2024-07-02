@@ -86,16 +86,19 @@ def main():
             temp_extensions = temp_extensions.split(',')
             rules[rule_dest]['extensions'] = temp_extensions
 
-            print("Confirm the following ", end="")
             num_extensions = len(rules[rule_dest]['extensions'])
-            if num_extensions > 1: 
-                print (str(num_extensions)+" extensions:")
-            else:
-                print("extension:")
+            if num_extensions > 1 or (num_extensions == 1 and rules[rule_dest]['extensions'][0] != ""): #Non-empty list of extensions to  confirm
+                print("Confirm the following ", end="")
+                if num_extensions > 1: 
+                    print (str(num_extensions)+" extensions:")
+                else:
+                    print("extension:")
             
-            for i in range(num_extensions):
-                print("#" + str(i+1) + ": " + rules[rule_dest]['extensions'][i])
-            confirm_exts_input = input("Continue with these extensions? (Y/N)")
+                for i in range(num_extensions):
+                    print("#" + str(i+1) + ": " + rules[rule_dest]['extensions'][i])
+                confirm_exts_input = input("Continue with these extensions? (Y/N)")
+            else: # Empty list of extensions to confirm
+                confirm_exts_input = input("Continue with no extensions? (Y/N)")
             if confirm_exts_input.lower() == "y":
                 done_with_extensions = True
             else:
@@ -108,16 +111,20 @@ def main():
             temp_names = temp_names.split(',')
             rules[rule_dest]['names'] = temp_names # 
 
-            print("Confirm the following ", end="")
             num_names = len(rules[rule_dest]['names'])
-            if num_names > 1: 
-                print (str(num_names)+" names:")
-            else:
-                print("name:")
+            if num_names > 1 or (num_names == 1 and rules[rule_dest]['names'][0] != ""): # Non-empty list of names to  confirm
+                print("Confirm the following ", end="")
+                if num_names > 1: 
+                    print (str(num_names)+" names:")
+                else:
+                    print("name:")
+                for i in range(num_names):
+                    print("#" + str(i+1) + ": " + rules[rule_dest]['names'][i])
+                    confirm_names_input = input("Continue with these names? (Y/N)")
+            else: # Empty list of names to confirm
+                confirm_names_input = input("Continue with no names? (Y/N)")
             
-            for i in range(num_names):
-                print("#" + str(i+1) + ": " + rules[rule_dest]['names'][i])
-            confirm_names_input = input("Continue with these names? (Y/N)")
+            
             if confirm_names_input.lower() == "y":
                 done_with_names = True
             else:
