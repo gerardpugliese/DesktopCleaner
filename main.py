@@ -122,7 +122,11 @@ def main():
                     print("#" + str(i+1) + ": " + rules[rule_dest]['names'][i])
                     confirm_names_input = input("Continue with these names? (Y/N)")
             else: # Empty list of names to confirm
-                confirm_names_input = input("Continue with no names? (Y/N)")
+                if (num_extensions == 1 and rules[rule_dest]['extensions'][0] == ""):
+                    print("Cannot create rule with no extensions and no names.")
+                    continue    
+                else:
+                    confirm_names_input = input("Continue with no names? (Y/N)")
             
             
             if confirm_names_input.lower() == "y":
